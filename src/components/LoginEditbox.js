@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from '../context';
 
 function LoginEditbox(props) {
+  const UserContextEmail = useContext(UserContext)[0];
+  const UserContextPassword = useContext(UserContext)[1];
+  const {userEmail, updateUserEmail} = UserContextEmail;
+  const {userPassword, updateUserPassword} = UserContextPassword;
+
+  const onChangeText = (event) => {
+    let cellValue = event.target.value;
+    (props.type === "password") ? updateUserPassword(cellValue) : updateUserEmail(cellValue);
+  };
   return (
     <Container {...props}>
       <Rect>
         <TextInput 
         placeholder={props.text}
-        onChangeText={(text) => props.action(text)}
+        onChange={onChangeText}
         ></TextInput>
       </Rect>
     </Container>

@@ -1,18 +1,15 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import LoginEditbox from "../components/LoginEditbox";
 import LoginButton from "../components/LoginButton";
 import { firebase } from '../firebase_config';
-import { Link } from "react-router-dom";
+import { UserContext } from '../context';
 
 function LoginScreen(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onLogin = () => {
-    alert(`${email} ${password}`);
-    //return <Link to="/Loading" />;
-  };
+  const UserContextEmail = useContext(UserContext)[0];
+  const UserContextPassword = useContext(UserContext)[1];
+  const {userEmail, updateUserEmail} = UserContextEmail;
+  const {userPassword, updateUserPassword} = UserContextPassword;
 
   return (
     <Container>
@@ -25,7 +22,7 @@ function LoginScreen(props) {
       <Group2>
         <LoginEditbox
           text={"E-mail"}
-          action={setEmail}
+          type={"email"}
           style={{
             height: 48,
             width: 384,
@@ -35,7 +32,7 @@ function LoginScreen(props) {
         ></LoginEditbox>
         <LoginEditbox
           text={"Пароль"}
-          action={setPassword}
+          type={"password"}
           style={{
             height: 48,
             width: 384,
@@ -44,7 +41,6 @@ function LoginScreen(props) {
           }}
         ></LoginEditbox>
         <LoginButton
-          action = {onLogin}
           style={{
             height: 48,
             width: 384,

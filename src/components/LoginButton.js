@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from '../context';
+import { useNavigate } from 'react-router-dom';
 
 function LoginButton(props) {
+  const UserContextEmail = useContext(UserContext)[0];
+  const UserContextPassword = useContext(UserContext)[1];
+  const {userEmail, updateUserEmail} = UserContextEmail;
+  const {userPassword, updateUserPassword} = UserContextPassword;
+  const navigate = useNavigate();
+  debugger;
+
+  const onLogin = () => {
+    //alert(`${userEmail} ${userPassword}`);
+    navigate("/Loading");
+  }; 
+
   return (
     <Container {...props}>
-      <Button onClick={props.action}>
+      <Button onClick={onLogin}>
         Войти 
       </Button>
     </Container>
