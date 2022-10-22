@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from '../context';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function LoginButton(props) {
   const UserContextEmail = useContext(UserContext)[0];
@@ -9,11 +10,13 @@ function LoginButton(props) {
   const {userEmail, updateUserEmail} = UserContextEmail;
   const {userPassword, updateUserPassword} = UserContextPassword;
   const navigate = useNavigate();
-  debugger;
 
   const onLogin = () => {
-    //alert(`${userEmail} ${userPassword}`);
     navigate("/Loading");
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, userEmail, userPassword).then((response) => {console.log(response)}).catch((error) => {
+      navigate("/");
+    });
   }; 
 
   return (
